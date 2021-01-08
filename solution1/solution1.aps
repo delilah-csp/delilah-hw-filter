@@ -52,12 +52,6 @@
             <Rtl active="false" name="vhdl"/>
         </SimFlow>
     </Simulation>
-    <downStreamTool>
-        <DownStreamTool name="vivado"/>
-    </downStreamTool>
-    <clockList>
-        <clock name="default" default="false" uncertainty="12.5%" period="100MHz"/>
-    </clockList>
     <name>
         <value string="solution1"/>
     </name>
@@ -71,5 +65,11 @@
         <library name="DefaultPlatform" value="xilinx/zynquplus/zynquplus"/>
         <library value="xilinx/zynquplus/zynquplus_fpv7" name="DefaultPlatform"/>
     </libraryList>
+    <downStreamTool>
+        <DownStreamTool name="vivado"/>
+    </downStreamTool>
+    <clockList>
+        <clock name="default" default="false" uncertainty="12.5%" period="100MHz"/>
+    </clockList>
 </solution>
 

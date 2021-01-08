@@ -29,24 +29,10 @@
     "in": {
       "index": "0",
       "type": {
-        "kinds": [
-          "struct",
-          "pointer"
-        ],
-        "dataType": "delilah_array",
-        "structImpl": "flat-field",
-        "dataPack": true,
-        "fields": {"value": {
-            "order": "0",
-            "kinds": ["array"],
-            "dataType": "long",
-            "dataWidth": "64",
-            "arraySizes": ["1024"],
-            "interfaceRef": "m_axi_gmem",
-            "bitMap": "63:0",
-            "structImpl": "field",
-            "dataPack": true
-          }}
+        "kinds": ["pointer"],
+        "dataType": "long",
+        "dataWidth": "64",
+        "interfaceRef": "m_axi_gmem"
       }
     },
     "out": {
@@ -139,15 +125,17 @@
   "Files": {
     "CSource": ["..\/filter.c"],
     "Vhdl": [
-      "impl\/vhdl\/filter_arr_value.vhd",
       "impl\/vhdl\/filter_control_s_axi.vhd",
       "impl\/vhdl\/filter_gmem_m_axi.vhd",
+      "impl\/vhdl\/filter_in_buf.vhd",
+      "impl\/vhdl\/filter_out_buf.vhd",
       "impl\/vhdl\/filter.vhd"
     ],
     "Verilog": [
-      "impl\/verilog\/filter_arr_value.v",
       "impl\/verilog\/filter_control_s_axi.v",
       "impl\/verilog\/filter_gmem_m_axi.v",
+      "impl\/verilog\/filter_in_buf.v",
+      "impl\/verilog\/filter_out_buf.v",
       "impl\/verilog\/filter.v"
     ],
     "SwDriver": [
@@ -567,32 +555,32 @@
         },
         {
           "offset": "0x1c",
-          "name": "in_value_1",
+          "name": "in_r_1",
           "access": "W",
           "reset_value": "0x0",
-          "description": "Data signal of in_value",
+          "description": "Data signal of in_r",
           "fields": [{
               "offset": "0",
               "width": "32",
-              "name": "in_value",
+              "name": "in_r",
               "access": "W",
               "reset_value": "0",
-              "description": "Bit 31 to 0 Data signal of in_value"
+              "description": "Bit 31 to 0 Data signal of in_r"
             }]
         },
         {
           "offset": "0x20",
-          "name": "in_value_2",
+          "name": "in_r_2",
           "access": "W",
           "reset_value": "0x0",
-          "description": "Data signal of in_value",
+          "description": "Data signal of in_r",
           "fields": [{
               "offset": "0",
               "width": "32",
-              "name": "in_value",
+              "name": "in_r",
               "access": "W",
               "reset_value": "0",
-              "description": "Bit 63 to 32 Data signal of in_value"
+              "description": "Bit 63 to 32 Data signal of in_r"
             }]
         },
         {
@@ -1098,21 +1086,32 @@
             "TripCount": "",
             "Latency": "",
             "PipelineII": "",
-            "PipelineDepth": "3089",
+            "PipelineDepthMin": "8200",
+            "PipelineDepthMax": "16398",
+            "PipelineDepth": "8200 ~ 16398",
             "Loops": [
               {
-                "Name": "Vector_Loop_EQ.1",
-                "TripCount": "1024",
-                "Latency": "2047",
-                "PipelineII": "",
-                "PipelineDepth": "2"
+                "Name": "memcpy.in_buf.in",
+                "TripCount": "4096",
+                "Latency": "4097",
+                "PipelineII": "1",
+                "PipelineDepth": "3"
               },
               {
                 "Name": "Value_Loop_EQ",
                 "TripCount": "32",
-                "Latency": "1031",
-                "PipelineII": "32",
-                "PipelineDepth": "40"
+                "Latency": "4097",
+                "PipelineII": "128",
+                "PipelineDepth": "129"
+              },
+              {
+                "Name": "memcpy.out.out_buf.gep42",
+                "TripCount": "",
+                "LatencyMin": "0",
+                "LatencyMax": "8192",
+                "Latency": "0 ~ 8192",
+                "PipelineII": "1",
+                "PipelineDepth": "3"
               }
             ]
           },
@@ -1121,44 +1120,32 @@
             "TripCount": "",
             "Latency": "",
             "PipelineII": "",
-            "PipelineDepth": "3089",
+            "PipelineDepthMin": "8200",
+            "PipelineDepthMax": "16398",
+            "PipelineDepth": "8200 ~ 16398",
             "Loops": [
               {
-                "Name": "Vector_Loop_NEQ.1",
-                "TripCount": "1024",
-                "Latency": "2047",
-                "PipelineII": "",
-                "PipelineDepth": "2"
+                "Name": "memcpy.in_buf.in",
+                "TripCount": "4096",
+                "Latency": "4097",
+                "PipelineII": "1",
+                "PipelineDepth": "3"
               },
               {
                 "Name": "Value_Loop_NEQ",
                 "TripCount": "32",
-                "Latency": "1031",
-                "PipelineII": "32",
-                "PipelineDepth": "40"
-              }
-            ]
-          },
-          {
-            "Name": "Vector_Loop_LT",
-            "TripCount": "",
-            "Latency": "",
-            "PipelineII": "",
-            "PipelineDepth": "3089",
-            "Loops": [
-              {
-                "Name": "Vector_Loop_LT.1",
-                "TripCount": "1024",
-                "Latency": "2047",
-                "PipelineII": "",
-                "PipelineDepth": "2"
+                "Latency": "4097",
+                "PipelineII": "128",
+                "PipelineDepth": "129"
               },
               {
-                "Name": "Value_Loop_LT",
-                "TripCount": "32",
-                "Latency": "1031",
-                "PipelineII": "32",
-                "PipelineDepth": "40"
+                "Name": "memcpy.out.out_buf.gep41",
+                "TripCount": "",
+                "LatencyMin": "0",
+                "LatencyMax": "8192",
+                "Latency": "0 ~ 8192",
+                "PipelineII": "1",
+                "PipelineDepth": "3"
               }
             ]
           },
@@ -1167,44 +1154,32 @@
             "TripCount": "",
             "Latency": "",
             "PipelineII": "",
-            "PipelineDepth": "3089",
+            "PipelineDepthMin": "8200",
+            "PipelineDepthMax": "16398",
+            "PipelineDepth": "8200 ~ 16398",
             "Loops": [
               {
-                "Name": "Vector_Loop_LE.1",
-                "TripCount": "1024",
-                "Latency": "2047",
-                "PipelineII": "",
-                "PipelineDepth": "2"
+                "Name": "memcpy.in_buf.in",
+                "TripCount": "4096",
+                "Latency": "4097",
+                "PipelineII": "1",
+                "PipelineDepth": "3"
               },
               {
                 "Name": "Value_Loop_LE",
                 "TripCount": "32",
-                "Latency": "1031",
-                "PipelineII": "32",
-                "PipelineDepth": "40"
-              }
-            ]
-          },
-          {
-            "Name": "Vector_Loop_GT",
-            "TripCount": "",
-            "Latency": "",
-            "PipelineII": "",
-            "PipelineDepth": "3089",
-            "Loops": [
-              {
-                "Name": "Vector_Loop_GT.1",
-                "TripCount": "1024",
-                "Latency": "2047",
-                "PipelineII": "",
-                "PipelineDepth": "2"
+                "Latency": "4097",
+                "PipelineII": "128",
+                "PipelineDepth": "129"
               },
               {
-                "Name": "Value_Loop_GT",
-                "TripCount": "32",
-                "Latency": "1031",
-                "PipelineII": "32",
-                "PipelineDepth": "40"
+                "Name": "memcpy.out.out_buf.gep40",
+                "TripCount": "",
+                "LatencyMin": "0",
+                "LatencyMax": "8192",
+                "Latency": "0 ~ 8192",
+                "PipelineII": "1",
+                "PipelineDepth": "3"
               }
             ]
           },
@@ -1213,44 +1188,32 @@
             "TripCount": "",
             "Latency": "",
             "PipelineII": "",
-            "PipelineDepth": "3089",
+            "PipelineDepthMin": "8200",
+            "PipelineDepthMax": "16398",
+            "PipelineDepth": "8200 ~ 16398",
             "Loops": [
               {
-                "Name": "Vector_Loop_GE.1",
-                "TripCount": "1024",
-                "Latency": "2047",
-                "PipelineII": "",
-                "PipelineDepth": "2"
+                "Name": "memcpy.in_buf.in",
+                "TripCount": "4096",
+                "Latency": "4097",
+                "PipelineII": "1",
+                "PipelineDepth": "3"
               },
               {
                 "Name": "Value_Loop_GE",
                 "TripCount": "32",
-                "Latency": "1031",
-                "PipelineII": "32",
-                "PipelineDepth": "40"
-              }
-            ]
-          },
-          {
-            "Name": "Vector_Loop_BW",
-            "TripCount": "",
-            "Latency": "",
-            "PipelineII": "",
-            "PipelineDepth": "3089",
-            "Loops": [
-              {
-                "Name": "Vector_Loop_BW.1",
-                "TripCount": "1024",
-                "Latency": "2047",
-                "PipelineII": "",
-                "PipelineDepth": "2"
+                "Latency": "4097",
+                "PipelineII": "128",
+                "PipelineDepth": "129"
               },
               {
-                "Name": "Value_Loop_BW",
-                "TripCount": "32",
-                "Latency": "1031",
-                "PipelineII": "32",
-                "PipelineDepth": "40"
+                "Name": "memcpy.out.out_buf.gep39",
+                "TripCount": "",
+                "LatencyMin": "0",
+                "LatencyMax": "8192",
+                "Latency": "0 ~ 8192",
+                "PipelineII": "1",
+                "PipelineDepth": "3"
               }
             ]
           },
@@ -1259,75 +1222,40 @@
             "TripCount": "",
             "Latency": "",
             "PipelineII": "",
-            "PipelineDepth": "3089",
+            "PipelineDepthMin": "8200",
+            "PipelineDepthMax": "16398",
+            "PipelineDepth": "8200 ~ 16398",
             "Loops": [
               {
-                "Name": "Vector_Loop_BWI.1",
-                "TripCount": "1024",
-                "Latency": "2047",
-                "PipelineII": "",
-                "PipelineDepth": "2"
+                "Name": "memcpy.in_buf.in",
+                "TripCount": "4096",
+                "Latency": "4097",
+                "PipelineII": "1",
+                "PipelineDepth": "3"
               },
               {
                 "Name": "Value_Loop_BWI",
                 "TripCount": "32",
-                "Latency": "1031",
-                "PipelineII": "32",
-                "PipelineDepth": "40"
-              }
-            ]
-          },
-          {
-            "Name": "Vector_Loop_BWLI",
-            "TripCount": "",
-            "Latency": "",
-            "PipelineII": "",
-            "PipelineDepth": "3089",
-            "Loops": [
-              {
-                "Name": "Vector_Loop_BWLI.1",
-                "TripCount": "1024",
-                "Latency": "2047",
-                "PipelineII": "",
-                "PipelineDepth": "2"
+                "Latency": "4097",
+                "PipelineII": "128",
+                "PipelineDepth": "129"
               },
               {
-                "Name": "Value_Loop_BWLI",
-                "TripCount": "32",
-                "Latency": "1031",
-                "PipelineII": "32",
-                "PipelineDepth": "40"
-              }
-            ]
-          },
-          {
-            "Name": "Vector_Loop_BWHI",
-            "TripCount": "",
-            "Latency": "",
-            "PipelineII": "",
-            "PipelineDepth": "3089",
-            "Loops": [
-              {
-                "Name": "Vector_Loop_BWHI.1",
-                "TripCount": "1024",
-                "Latency": "2047",
-                "PipelineII": "",
-                "PipelineDepth": "2"
-              },
-              {
-                "Name": "Value_Loop_BWHI",
-                "TripCount": "32",
-                "Latency": "1031",
-                "PipelineII": "32",
-                "PipelineDepth": "40"
+                "Name": "memcpy.out.out_buf.gep",
+                "TripCount": "",
+                "LatencyMin": "0",
+                "LatencyMax": "8192",
+                "Latency": "0 ~ 8192",
+                "PipelineII": "1",
+                "PipelineDepth": "3"
               }
             ]
           }
         ],
         "Area": {
-          "BRAM_18K": "44",
-          "FF": "56604",
-          "LUT": "74154",
+          "BRAM_18K": "34",
+          "FF": "49471",
+          "LUT": "80553",
           "URAM": "0",
           "DSP48E": "0"
         }
@@ -1343,7 +1271,7 @@
   },
   "GenData": {
     "DataVersion": "0.2",
-    "Time": "2022-01-05 12:37:49 CET",
+    "Time": "2021-01-08 15:31:58 CET",
     "ToolName": "vivado_hls",
     "ToolVersion": "2019.1.3"
   }

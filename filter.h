@@ -1,17 +1,9 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-#define BUF_SIZE_IN 1024
-#define BUF_SIZE_OUT 1024
-
-struct delilah_array_in {
-  uint64_t value[BUF_SIZE_IN];
-};
-
-struct delilah_array_out {
-  uint64_t value[BUF_SIZE_OUT];
-};
+#define BUF_SIZE 4096
 
 enum DELILAH_FILTER_OPS {
   DELILAH_FILTER_EQ,
