@@ -12,50 +12,53 @@ uint64_t filter(uint64_t *in, uint64_t *out, uint64_t num, uint64_t op,
 
   uint64_t c = 0;
   for (uint64_t i = 0; i < num; i++) {
-    switch (op) {
-    case DELILAH_FILTER_EQ:
-      if (in[i] == comp1)
-        out[c++] = in[i];
-      break;
-    case DELILAH_FILTER_NEQ:
-      if (in[i] != comp1)
-        out[c++] = in[i];
-      break;
-    case DELILAH_FILTER_LT:
-      if (in[i] < comp1)
-        out[c++] = in[i];
-      break;
-    case DELILAH_FILTER_LE:
-      if (in[i] <= comp1)
-        out[c++] = in[i];
-      break;
-    case DELILAH_FILTER_GT:
-      if (in[i] > comp1)
-        out[c++] = in[i];
-      break;
-    case DELILAH_FILTER_GE:
-      if (in[i] >= comp1)
-        out[c++] = in[i];
-      break;
-    case DELILAH_FILTER_BW:
-      if (in[i] > comp1 && in[i] < comp2)
-        out[c++] = in[i];
-      break;
-    case DELILAH_FILTER_BWI:
-      if (in[i] >= comp1 && in[i] <= comp2)
-        out[c++] = in[i];
-      break;
-    case DELILAH_FILTER_BWLI:
-      if (in[i] >= comp1 && in[i] < comp2)
-        out[c++] = in[i];
-      break;
-    case DELILAH_FILTER_BWHI:
-      if (in[i] > comp1 && in[i] <= comp2)
-        out[c++] = in[i];
-      break;
-    default:
-      c = UINT64_MAX;
-      break;
+    uint64_t *lin = in + 1024 * i;
+    for (uint64_t j = 0; j < 1024; j++) {
+      switch (op) {
+      case DELILAH_FILTER_EQ:
+        if (lin[j] == comp1)
+          out[c++] = lin[j];
+        break;
+      case DELILAH_FILTER_NEQ:
+        if (lin[j] != comp1)
+          out[c++] = lin[j];
+        break;
+      case DELILAH_FILTER_LT:
+        if (lin[j] < comp1)
+          out[c++] = lin[j];
+        break;
+      case DELILAH_FILTER_LE:
+        if (lin[j] <= comp1)
+          out[c++] = lin[j];
+        break;
+      case DELILAH_FILTER_GT:
+        if (lin[j] > comp1)
+          out[c++] = lin[j];
+        break;
+      case DELILAH_FILTER_GE:
+        if (lin[j] >= comp1)
+          out[c++] = lin[j];
+        break;
+      case DELILAH_FILTER_BW:
+        if (lin[j] > comp1 && in[j] < comp2)
+          out[c++] = lin[j];
+        break;
+      case DELILAH_FILTER_BWI:
+        if (lin[j] >= comp1 && in[j] <= comp2)
+          out[c++] = lin[j];
+        break;
+      case DELILAH_FILTER_BWLI:
+        if (lin[j] >= comp1 && in[j] < comp2)
+          out[c++] = lin[j];
+        break;
+      case DELILAH_FILTER_BWHI:
+        if (lin[j] > comp1 && in[j] <= comp2)
+          out[c++] = lin[j];
+        break;
+      default:
+        c = UINT64_MAX;
+        break;
+      }
     }
   }
 
