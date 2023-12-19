@@ -1,4 +1,10 @@
 #include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+struct delilah_array {
+  uint64_t value[1024];
+};
 
 enum DELILAH_FILTER_OPS {
   DELILAH_FILTER_EQ,
