@@ -29,10 +29,24 @@
     "in": {
       "index": "0",
       "type": {
-        "kinds": ["pointer"],
-        "dataType": "long",
-        "dataWidth": "64",
-        "interfaceRef": "m_axi_gmem"
+        "kinds": [
+          "struct",
+          "pointer"
+        ],
+        "dataType": "delilah_array",
+        "structImpl": "flat-field",
+        "dataPack": true,
+        "fields": {"value": {
+            "order": "0",
+            "kinds": ["array"],
+            "dataType": "long",
+            "dataWidth": "64",
+            "arraySizes": ["1024"],
+            "interfaceRef": "m_axi_gmem",
+            "bitMap": "63:0",
+            "structImpl": "field",
+            "dataPack": true
+          }}
       }
     },
     "out": {
@@ -125,11 +139,13 @@
   "Files": {
     "CSource": ["..\/filter.c"],
     "Vhdl": [
+      "impl\/vhdl\/filter_arr_value.vhd",
       "impl\/vhdl\/filter_control_s_axi.vhd",
       "impl\/vhdl\/filter_gmem_m_axi.vhd",
       "impl\/vhdl\/filter.vhd"
     ],
     "Verilog": [
+      "impl\/verilog\/filter_arr_value.v",
       "impl\/verilog\/filter_control_s_axi.v",
       "impl\/verilog\/filter_gmem_m_axi.v",
       "impl\/verilog\/filter.v"
@@ -551,32 +567,32 @@
         },
         {
           "offset": "0x1c",
-          "name": "in_r_1",
+          "name": "in_value_1",
           "access": "W",
           "reset_value": "0x0",
-          "description": "Data signal of in_r",
+          "description": "Data signal of in_value",
           "fields": [{
               "offset": "0",
               "width": "32",
-              "name": "in_r",
+              "name": "in_value",
               "access": "W",
               "reset_value": "0",
-              "description": "Bit 31 to 0 Data signal of in_r"
+              "description": "Bit 31 to 0 Data signal of in_value"
             }]
         },
         {
           "offset": "0x20",
-          "name": "in_r_2",
+          "name": "in_value_2",
           "access": "W",
           "reset_value": "0x0",
-          "description": "Data signal of in_r",
+          "description": "Data signal of in_value",
           "fields": [{
               "offset": "0",
               "width": "32",
-              "name": "in_r",
+              "name": "in_value",
               "access": "W",
               "reset_value": "0",
-              "description": "Bit 63 to 32 Data signal of in_r"
+              "description": "Bit 63 to 32 Data signal of in_value"
             }]
         },
         {
@@ -1076,21 +1092,244 @@
           "Uncertainty": "1.25",
           "Estimate": "8.750"
         },
-        "Loops": [{
-            "Name": "Loop 1",
+        "Loops": [
+          {
+            "Name": "Vector_Loop_EQ",
             "TripCount": "",
             "Latency": "",
             "PipelineII": "",
-            "PipelineDepthMin": "2",
-            "PipelineDepthMax": "17",
-            "PipelineDepth": "2 ~ 17"
-          }],
+            "PipelineDepth": "3089",
+            "Loops": [
+              {
+                "Name": "Vector_Loop_EQ.1",
+                "TripCount": "1024",
+                "Latency": "2047",
+                "PipelineII": "",
+                "PipelineDepth": "2"
+              },
+              {
+                "Name": "Value_Loop_EQ",
+                "TripCount": "32",
+                "Latency": "1031",
+                "PipelineII": "32",
+                "PipelineDepth": "40"
+              }
+            ]
+          },
+          {
+            "Name": "Vector_Loop_NEQ",
+            "TripCount": "",
+            "Latency": "",
+            "PipelineII": "",
+            "PipelineDepth": "3089",
+            "Loops": [
+              {
+                "Name": "Vector_Loop_NEQ.1",
+                "TripCount": "1024",
+                "Latency": "2047",
+                "PipelineII": "",
+                "PipelineDepth": "2"
+              },
+              {
+                "Name": "Value_Loop_NEQ",
+                "TripCount": "32",
+                "Latency": "1031",
+                "PipelineII": "32",
+                "PipelineDepth": "40"
+              }
+            ]
+          },
+          {
+            "Name": "Vector_Loop_LT",
+            "TripCount": "",
+            "Latency": "",
+            "PipelineII": "",
+            "PipelineDepth": "3089",
+            "Loops": [
+              {
+                "Name": "Vector_Loop_LT.1",
+                "TripCount": "1024",
+                "Latency": "2047",
+                "PipelineII": "",
+                "PipelineDepth": "2"
+              },
+              {
+                "Name": "Value_Loop_LT",
+                "TripCount": "32",
+                "Latency": "1031",
+                "PipelineII": "32",
+                "PipelineDepth": "40"
+              }
+            ]
+          },
+          {
+            "Name": "Vector_Loop_LE",
+            "TripCount": "",
+            "Latency": "",
+            "PipelineII": "",
+            "PipelineDepth": "3089",
+            "Loops": [
+              {
+                "Name": "Vector_Loop_LE.1",
+                "TripCount": "1024",
+                "Latency": "2047",
+                "PipelineII": "",
+                "PipelineDepth": "2"
+              },
+              {
+                "Name": "Value_Loop_LE",
+                "TripCount": "32",
+                "Latency": "1031",
+                "PipelineII": "32",
+                "PipelineDepth": "40"
+              }
+            ]
+          },
+          {
+            "Name": "Vector_Loop_GT",
+            "TripCount": "",
+            "Latency": "",
+            "PipelineII": "",
+            "PipelineDepth": "3089",
+            "Loops": [
+              {
+                "Name": "Vector_Loop_GT.1",
+                "TripCount": "1024",
+                "Latency": "2047",
+                "PipelineII": "",
+                "PipelineDepth": "2"
+              },
+              {
+                "Name": "Value_Loop_GT",
+                "TripCount": "32",
+                "Latency": "1031",
+                "PipelineII": "32",
+                "PipelineDepth": "40"
+              }
+            ]
+          },
+          {
+            "Name": "Vector_Loop_GE",
+            "TripCount": "",
+            "Latency": "",
+            "PipelineII": "",
+            "PipelineDepth": "3089",
+            "Loops": [
+              {
+                "Name": "Vector_Loop_GE.1",
+                "TripCount": "1024",
+                "Latency": "2047",
+                "PipelineII": "",
+                "PipelineDepth": "2"
+              },
+              {
+                "Name": "Value_Loop_GE",
+                "TripCount": "32",
+                "Latency": "1031",
+                "PipelineII": "32",
+                "PipelineDepth": "40"
+              }
+            ]
+          },
+          {
+            "Name": "Vector_Loop_BW",
+            "TripCount": "",
+            "Latency": "",
+            "PipelineII": "",
+            "PipelineDepth": "3089",
+            "Loops": [
+              {
+                "Name": "Vector_Loop_BW.1",
+                "TripCount": "1024",
+                "Latency": "2047",
+                "PipelineII": "",
+                "PipelineDepth": "2"
+              },
+              {
+                "Name": "Value_Loop_BW",
+                "TripCount": "32",
+                "Latency": "1031",
+                "PipelineII": "32",
+                "PipelineDepth": "40"
+              }
+            ]
+          },
+          {
+            "Name": "Vector_Loop_BWI",
+            "TripCount": "",
+            "Latency": "",
+            "PipelineII": "",
+            "PipelineDepth": "3089",
+            "Loops": [
+              {
+                "Name": "Vector_Loop_BWI.1",
+                "TripCount": "1024",
+                "Latency": "2047",
+                "PipelineII": "",
+                "PipelineDepth": "2"
+              },
+              {
+                "Name": "Value_Loop_BWI",
+                "TripCount": "32",
+                "Latency": "1031",
+                "PipelineII": "32",
+                "PipelineDepth": "40"
+              }
+            ]
+          },
+          {
+            "Name": "Vector_Loop_BWLI",
+            "TripCount": "",
+            "Latency": "",
+            "PipelineII": "",
+            "PipelineDepth": "3089",
+            "Loops": [
+              {
+                "Name": "Vector_Loop_BWLI.1",
+                "TripCount": "1024",
+                "Latency": "2047",
+                "PipelineII": "",
+                "PipelineDepth": "2"
+              },
+              {
+                "Name": "Value_Loop_BWLI",
+                "TripCount": "32",
+                "Latency": "1031",
+                "PipelineII": "32",
+                "PipelineDepth": "40"
+              }
+            ]
+          },
+          {
+            "Name": "Vector_Loop_BWHI",
+            "TripCount": "",
+            "Latency": "",
+            "PipelineII": "",
+            "PipelineDepth": "3089",
+            "Loops": [
+              {
+                "Name": "Vector_Loop_BWHI.1",
+                "TripCount": "1024",
+                "Latency": "2047",
+                "PipelineII": "",
+                "PipelineDepth": "2"
+              },
+              {
+                "Name": "Value_Loop_BWHI",
+                "TripCount": "32",
+                "Latency": "1031",
+                "PipelineII": "32",
+                "PipelineDepth": "40"
+              }
+            ]
+          }
+        ],
         "Area": {
-          "BRAM_18K": "4",
-          "FF": "2506",
-          "LUT": "2903",
-          "DSP48E": "0",
-          "URAM": "0"
+          "BRAM_18K": "44",
+          "FF": "56604",
+          "LUT": "74154",
+          "URAM": "0",
+          "DSP48E": "0"
         }
       }}
   },
@@ -1104,7 +1343,7 @@
   },
   "GenData": {
     "DataVersion": "0.2",
-    "Time": "2021-10-24 13:07:47 CEST",
+    "Time": "2022-01-05 12:37:49 CET",
     "ToolName": "vivado_hls",
     "ToolVersion": "2019.1.3"
   }

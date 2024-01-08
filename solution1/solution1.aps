@@ -56,7 +56,7 @@
         <DownStreamTool name="vivado"/>
     </downStreamTool>
     <clockList>
-        <clock name="default" default="false" period="100MHz"/>
+        <clock name="default" default="false" uncertainty="12.5%" period="100MHz"/>
     </clockList>
     <name>
         <value string="solution1"/>
