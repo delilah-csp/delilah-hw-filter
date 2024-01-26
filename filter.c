@@ -25,7 +25,7 @@ uint64_t filter(uint64_t *in, uint64_t *out, uint64_t num, uint64_t op,
       memcpy(in_buf, &in[i * BUF_SIZE], BUF_SIZE * sizeof(uint64_t));
     Value_Loop_EQ:
       for (j = 0; j < BUF_SIZE; j++) {
-#pragma HLS UNROLL factor = 128
+#pragma HLS UNROLL factor = 64
 #pragma HLS PIPELINE
         if (in_buf[j] == comp1)
           out_buf[k++] = in_buf[j];
@@ -44,7 +44,7 @@ uint64_t filter(uint64_t *in, uint64_t *out, uint64_t num, uint64_t op,
       memcpy(in_buf, &in[i * BUF_SIZE], BUF_SIZE * sizeof(uint64_t));
     Value_Loop_NEQ:
       for (j = 0; j < BUF_SIZE; j++) {
-#pragma HLS UNROLL factor = 128
+#pragma HLS UNROLL factor = 64
 #pragma HLS PIPELINE
         if (in_buf[j] != comp1)
           out_buf[k++] = in_buf[j];
@@ -63,7 +63,7 @@ uint64_t filter(uint64_t *in, uint64_t *out, uint64_t num, uint64_t op,
       memcpy(in_buf, &in[i * BUF_SIZE], BUF_SIZE * sizeof(uint64_t));
     Value_Loop_LE:
       for (j = 0; j < BUF_SIZE; j++) {
-#pragma HLS UNROLL factor = 128
+#pragma HLS UNROLL factor = 64
 #pragma HLS PIPELINE
         if (in_buf[j] <= comp1)
           out_buf[k++] = in_buf[j];
@@ -82,7 +82,7 @@ uint64_t filter(uint64_t *in, uint64_t *out, uint64_t num, uint64_t op,
       memcpy(in_buf, &in[i * BUF_SIZE], BUF_SIZE * sizeof(uint64_t));
     Value_Loop_GE:
       for (j = 0; j < BUF_SIZE; j++) {
-#pragma HLS UNROLL factor = 128
+#pragma HLS UNROLL factor = 64
 #pragma HLS PIPELINE
         if (in_buf[j] >= comp1)
           out_buf[k++] = in_buf[j];
@@ -101,7 +101,7 @@ uint64_t filter(uint64_t *in, uint64_t *out, uint64_t num, uint64_t op,
       memcpy(in_buf, &in[i * BUF_SIZE], BUF_SIZE * sizeof(uint64_t));
     Value_Loop_BWI:
       for (j = 0; j < BUF_SIZE; j++) {
-#pragma HLS UNROLL factor = 128
+#pragma HLS UNROLL factor = 64
 #pragma HLS PIPELINE
         if (in_buf[j] >= comp1 && in_buf[j] <= comp2)
           out_buf[k++] = in_buf[j];
