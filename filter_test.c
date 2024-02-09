@@ -3,13 +3,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-uint64_t filter(uint64_t *in, uint64_t *out, uint64_t num, uint64_t op,
-                uint64_t comp1, uint64_t comp2);
+uint64_t filter(filter_t *in, filter_t *out, uint64_t num, uint64_t op,
+                filter_t comp1, filter_t comp2);
 
 int main() {
 
-  uint64_t *in = malloc(2 * BUF_SIZE * sizeof(uint64_t));
-  uint64_t *out = malloc(2 * BUF_SIZE * sizeof(uint64_t));
+  filter_t *in = malloc(2 * BUF_SIZE * sizeof(filter_t));
+  filter_t *out = malloc(2 * BUF_SIZE * sizeof(filter_t));
 
   printf("HLS Filter Example\n");
   printf("OP: EQ(2)\n");
@@ -28,6 +28,5 @@ int main() {
     printf("%ld, ", out[i]);
   }
   printf("NULL]\n");
-  printf("There should be 8192 / 10 = 819 results. There is %ld.\n",
-         matches);
+  printf("There should be 8192 / 10 = 819 results. There is %ld.\n", matches);
 }

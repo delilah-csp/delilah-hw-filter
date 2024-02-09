@@ -5,11 +5,11 @@
     <config>
         <schedule model="filter"/>
         <config_sdx target="none"/>
-        <config_interface clock_enable="0" expose_global="0" m_axi_addr64="1" m_axi_offset="slave" register_io="off" trim_dangling_port="0"/>
         <config_export format="ip_catalog" rtl="verilog" use_netlist="" vivado_optimization_level="2" vivado_phys_opt="place" vivado_report_level="0"/>
+        <config_interface clock_enable="0" expose_global="0" m_axi_addr64="1" m_axi_offset="slave" register_io="off" trim_dangling_port="0"/>
     </config>
     <UIConfigurations>
-        <UIAutosynConf hideTrivialOp="true" isBasedOnBoard="false" isSolutionDirty="true" isStopAskAgain="false" showDetailDesignViewer="false">
+        <UIAutosynConf hideTrivialOp="true" isBasedOnBoard="false" isSolutionDirty="false" isStopAskAgain="false" showDetailDesignViewer="false">
             <Platform>xilinx/zynquplus/zynquplus</Platform>
             <customLibs/>
         </UIAutosynConf>
@@ -70,7 +70,7 @@
         <library value="xilinx/zynquplus/zynquplus_fpv7" name="DefaultPlatform"/>
     </libraryList>
     <clockList>
-        <clock name="default" default="false" uncertainty="12.5%" period="333MHz"/>
+        <clock name="default" default="false" uncertainty="12.5%" period="500MHz"/>
     </clockList>
 </solution>
 

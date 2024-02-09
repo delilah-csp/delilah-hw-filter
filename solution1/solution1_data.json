@@ -14,25 +14,25 @@
   },
   "HlsSolution": {"Config": [
       "config_sdx -target=none",
+      "config_export -format=ip_catalog",
+      "config_export -rtl=verilog",
+      "config_export -vivado_optimization_level=2",
+      "config_export -vivado_phys_opt=place",
+      "config_export -vivado_report_level=0",
       "config_interface -clock_enable=0",
       "config_interface -expose_global=0",
       "config_interface -m_axi_addr64=1",
       "config_interface -m_axi_offset=slave",
       "config_interface -register_io=off",
-      "config_interface -trim_dangling_port=0",
-      "config_export -format=ip_catalog",
-      "config_export -rtl=verilog",
-      "config_export -vivado_optimization_level=2",
-      "config_export -vivado_phys_opt=place",
-      "config_export -vivado_report_level=0"
+      "config_interface -trim_dangling_port=0"
     ]},
   "Args": {
     "in": {
       "index": "0",
       "type": {
         "kinds": ["pointer"],
-        "dataType": "long",
-        "dataWidth": "64",
+        "dataType": "unsigned",
+        "dataWidth": "32",
         "interfaceRef": "m_axi_gmem"
       }
     },
@@ -40,8 +40,8 @@
       "index": "1",
       "type": {
         "kinds": ["pointer"],
-        "dataType": "long",
-        "dataWidth": "64",
+        "dataType": "unsigned",
+        "dataWidth": "32",
         "interfaceRef": "m_axi_gmem"
       }
     },
@@ -72,25 +72,19 @@
     "comp1": {
       "index": "4",
       "type": {
-        "dataType": "long",
-        "dataWidth": "64",
+        "dataType": "unsigned",
+        "dataWidth": "32",
         "interfaceRef": "s_axi_control",
-        "registerRefs": [
-          "comp1_1",
-          "comp1_2"
-        ]
+        "registerRefs": ["comp1"]
       }
     },
     "comp2": {
       "index": "5",
       "type": {
-        "dataType": "long",
-        "dataWidth": "64",
+        "dataType": "unsigned",
+        "dataWidth": "32",
         "interfaceRef": "s_axi_control",
-        "registerRefs": [
-          "comp2_1",
-          "comp2_2"
-        ]
+        "registerRefs": ["comp2"]
       }
     }
   },
@@ -105,13 +99,13 @@
   },
   "ClockInfo": {
     "ClockName": "ap_clk",
-    "ClockPeriod": "3.003",
+    "ClockPeriod": "2",
     "IsCombLogic": "0",
     "II": "x",
     "Latency": "undef",
-    "Uncertainty": "0.375"
+    "Uncertainty": "0.25"
   },
-  "Xdc": {"OocClocks": ["create_clock -name ap_clk -period 3.003 [get_ports ap_clk]"]},
+  "Xdc": {"OocClocks": ["create_clock -name ap_clk -period 2.000 [get_ports ap_clk]"]},
   "Ipx": {
     "Vendor": "xilinx.com",
     "Library": "hls",
@@ -129,14 +123,12 @@
       "impl\/vhdl\/filter_control_s_axi.vhd",
       "impl\/vhdl\/filter_gmem_m_axi.vhd",
       "impl\/vhdl\/filter_in_buf.vhd",
-      "impl\/vhdl\/filter_out_buf.vhd",
       "impl\/vhdl\/filter.vhd"
     ],
     "Verilog": [
       "impl\/verilog\/filter_control_s_axi.v",
       "impl\/verilog\/filter_gmem_m_axi.v",
       "impl\/verilog\/filter_in_buf.v",
-      "impl\/verilog\/filter_out_buf.v",
       "impl\/verilog\/filter.v"
     ],
     "SwDriver": [
@@ -186,7 +178,7 @@
       "is_adaptor": "true",
       "mode": "master",
       "port_prefix": "m_axi_gmem",
-      "data_width": "64",
+      "data_width": "32",
       "param_prefix": "C_M_AXI_GMEM",
       "ctype": {
         "AWLEN": {
@@ -286,12 +278,12 @@
           "Width": "1"
         },
         "WDATA": {
-          "Type": "integer signed",
-          "Width": "64"
+          "Type": "integer unsigned",
+          "Width": "32"
         },
         "WSTRB": {
           "Type": "integer unsigned",
-          "Width": "8"
+          "Width": "4"
         },
         "WID": {
           "Type": "integer unsigned",
@@ -314,8 +306,8 @@
           "Width": "1"
         },
         "RDATA": {
-          "Type": "integer signed",
-          "Width": "64"
+          "Type": "integer unsigned",
+          "Width": "32"
         },
         "RID": {
           "Type": "integer unsigned",
@@ -351,12 +343,12 @@
         "AWUSER": "1",
         "BID": "1",
         "BUSER": "1",
-        "RDATA": "64",
+        "RDATA": "32",
         "RID": "1",
         "RUSER": "1",
-        "WDATA": "64",
+        "WDATA": "32",
         "WID": "1",
-        "WSTRB": "8",
+        "WSTRB": "4",
         "WUSER": "1"
       }
     },
@@ -676,7 +668,7 @@
         },
         {
           "offset": "0x4c",
-          "name": "comp1_1",
+          "name": "comp1",
           "access": "W",
           "reset_value": "0x0",
           "description": "Data signal of comp1",
@@ -690,23 +682,8 @@
             }]
         },
         {
-          "offset": "0x50",
-          "name": "comp1_2",
-          "access": "W",
-          "reset_value": "0x0",
-          "description": "Data signal of comp1",
-          "fields": [{
-              "offset": "0",
-              "width": "32",
-              "name": "comp1",
-              "access": "W",
-              "reset_value": "0",
-              "description": "Bit 63 to 32 Data signal of comp1"
-            }]
-        },
-        {
-          "offset": "0x58",
-          "name": "comp2_1",
+          "offset": "0x54",
+          "name": "comp2",
           "access": "W",
           "reset_value": "0x0",
           "description": "Data signal of comp2",
@@ -717,21 +694,6 @@
               "access": "W",
               "reset_value": "0",
               "description": "Bit 31 to 0 Data signal of comp2"
-            }]
-        },
-        {
-          "offset": "0x5c",
-          "name": "comp2_2",
-          "access": "W",
-          "reset_value": "0x0",
-          "description": "Data signal of comp2",
-          "fields": [{
-              "offset": "0",
-              "width": "32",
-              "name": "comp2",
-              "access": "W",
-              "reset_value": "0",
-              "description": "Bit 63 to 32 Data signal of comp2"
             }]
         }
       ],
@@ -931,11 +893,11 @@
     },
     "m_axi_gmem_WDATA": {
       "dir": "out",
-      "width": "64"
+      "width": "32"
     },
     "m_axi_gmem_WSTRB": {
       "dir": "out",
-      "width": "8"
+      "width": "4"
     },
     "m_axi_gmem_WLAST": {
       "dir": "out",
@@ -1015,7 +977,7 @@
     },
     "m_axi_gmem_RDATA": {
       "dir": "in",
-      "width": "64"
+      "width": "32"
     },
     "m_axi_gmem_RLAST": {
       "dir": "in",
@@ -1077,149 +1039,12 @@
           "PipelineType": "none"
         },
         "Timing": {
-          "Target": "3.00",
-          "Uncertainty": "0.38",
-          "Estimate": "2.654"
+          "Target": "2.00",
+          "Uncertainty": "0.25",
+          "Estimate": "1.750"
         },
-        "Loops": [
-          {
+        "Loops": [{
             "Name": "Vector_Loop_EQ",
-            "TripCount": "",
-            "Latency": "",
-            "PipelineII": "",
-            "PipelineDepthMin": "8200",
-            "PipelineDepthMax": "16398",
-            "PipelineDepth": "8200 ~ 16398",
-            "Loops": [
-              {
-                "Name": "memcpy.in_buf.in",
-                "TripCount": "4096",
-                "Latency": "4097",
-                "PipelineII": "1",
-                "PipelineDepth": "3"
-              },
-              {
-                "Name": "Value_Loop_EQ",
-                "TripCount": "64",
-                "Latency": "4097",
-                "PipelineII": "64",
-                "PipelineDepth": "65"
-              },
-              {
-                "Name": "memcpy.out.out_buf.gep42",
-                "TripCount": "",
-                "LatencyMin": "0",
-                "LatencyMax": "8192",
-                "Latency": "0 ~ 8192",
-                "PipelineII": "1",
-                "PipelineDepth": "3"
-              }
-            ]
-          },
-          {
-            "Name": "Vector_Loop_NEQ",
-            "TripCount": "",
-            "Latency": "",
-            "PipelineII": "",
-            "PipelineDepthMin": "8200",
-            "PipelineDepthMax": "16398",
-            "PipelineDepth": "8200 ~ 16398",
-            "Loops": [
-              {
-                "Name": "memcpy.in_buf.in",
-                "TripCount": "4096",
-                "Latency": "4097",
-                "PipelineII": "1",
-                "PipelineDepth": "3"
-              },
-              {
-                "Name": "Value_Loop_NEQ",
-                "TripCount": "64",
-                "Latency": "4097",
-                "PipelineII": "64",
-                "PipelineDepth": "65"
-              },
-              {
-                "Name": "memcpy.out.out_buf.gep41",
-                "TripCount": "",
-                "LatencyMin": "0",
-                "LatencyMax": "8192",
-                "Latency": "0 ~ 8192",
-                "PipelineII": "1",
-                "PipelineDepth": "3"
-              }
-            ]
-          },
-          {
-            "Name": "Vector_Loop_LE",
-            "TripCount": "",
-            "Latency": "",
-            "PipelineII": "",
-            "PipelineDepthMin": "8200",
-            "PipelineDepthMax": "16398",
-            "PipelineDepth": "8200 ~ 16398",
-            "Loops": [
-              {
-                "Name": "memcpy.in_buf.in",
-                "TripCount": "4096",
-                "Latency": "4097",
-                "PipelineII": "1",
-                "PipelineDepth": "3"
-              },
-              {
-                "Name": "Value_Loop_LE",
-                "TripCount": "64",
-                "Latency": "4097",
-                "PipelineII": "64",
-                "PipelineDepth": "65"
-              },
-              {
-                "Name": "memcpy.out.out_buf.gep40",
-                "TripCount": "",
-                "LatencyMin": "0",
-                "LatencyMax": "8192",
-                "Latency": "0 ~ 8192",
-                "PipelineII": "1",
-                "PipelineDepth": "3"
-              }
-            ]
-          },
-          {
-            "Name": "Vector_Loop_GE",
-            "TripCount": "",
-            "Latency": "",
-            "PipelineII": "",
-            "PipelineDepthMin": "8200",
-            "PipelineDepthMax": "16398",
-            "PipelineDepth": "8200 ~ 16398",
-            "Loops": [
-              {
-                "Name": "memcpy.in_buf.in",
-                "TripCount": "4096",
-                "Latency": "4097",
-                "PipelineII": "1",
-                "PipelineDepth": "3"
-              },
-              {
-                "Name": "Value_Loop_GE",
-                "TripCount": "64",
-                "Latency": "4097",
-                "PipelineII": "64",
-                "PipelineDepth": "65"
-              },
-              {
-                "Name": "memcpy.out.out_buf.gep39",
-                "TripCount": "",
-                "LatencyMin": "0",
-                "LatencyMax": "8192",
-                "Latency": "0 ~ 8192",
-                "PipelineII": "1",
-                "PipelineDepth": "3"
-              }
-            ]
-          },
-          {
-            "Name": "Vector_Loop_BWI",
             "TripCount": "",
             "Latency": "",
             "PipelineII": "",
@@ -1235,11 +1060,11 @@
                 "PipelineDepth": "3"
               },
               {
-                "Name": "Value_Loop_BWI",
-                "TripCount": "64",
+                "Name": "Value_Loop_EQ",
+                "TripCount": "4096",
                 "Latency": "4098",
-                "PipelineII": "64",
-                "PipelineDepth": "66"
+                "PipelineII": "1",
+                "PipelineDepth": "3"
               },
               {
                 "Name": "memcpy.out.out_buf.gep",
@@ -1251,12 +1076,11 @@
                 "PipelineDepth": "3"
               }
             ]
-          }
-        ],
+          }],
         "Area": {
-          "BRAM_18K": "34",
-          "FF": "26604",
-          "LUT": "43605",
+          "BRAM_18K": "18",
+          "FF": "1912",
+          "LUT": "2233",
           "URAM": "0",
           "DSP48E": "0"
         }
@@ -1272,7 +1096,7 @@
   },
   "GenData": {
     "DataVersion": "0.2",
-    "Time": "2021-01-25 14:42:59 CET",
+    "Time": "2024-02-09 12:42:05 CET",
     "ToolName": "vivado_hls",
     "ToolVersion": "2019.1.3"
   }
