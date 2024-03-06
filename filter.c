@@ -28,7 +28,7 @@ uint64_t filter(filter_t *in, filter_t *out, uint64_t num, uint64_t op,
 #pragma HLS UNROLL factor = 1
 #pragma HLS PIPELINE
         if (in_buf[j] == comp1)
-          out_buf[k++] = in_buf[j];
+          out_buf[k++] = BUF_SIZE * i + j;
       }
       if (k <=
           BUF_SIZE) // This will always be true, but helps the compiler optimise
@@ -47,7 +47,7 @@ uint64_t filter(filter_t *in, filter_t *out, uint64_t num, uint64_t op,
 #pragma HLS UNROLL factor = 1
 #pragma HLS PIPELINE
         if (in_buf[j] != comp1)
-          out_buf[k++] = in_buf[j];
+          out_buf[k++] = BUF_SIZE * i + j;
       }
       if (k <=
           BUF_SIZE) // This will always be true, but helps the compiler optimise
@@ -66,7 +66,7 @@ uint64_t filter(filter_t *in, filter_t *out, uint64_t num, uint64_t op,
 #pragma HLS UNROLL factor = 1
 #pragma HLS PIPELINE
         if (in_buf[j] <= comp1)
-          out_buf[k++] = in_buf[j];
+          out_buf[k++] = BUF_SIZE * i + j;
       }
       if (k <=
           BUF_SIZE) // This will always be true, but helps the compiler optimise
@@ -85,7 +85,7 @@ uint64_t filter(filter_t *in, filter_t *out, uint64_t num, uint64_t op,
 #pragma HLS UNROLL factor = 1
 #pragma HLS PIPELINE
         if (in_buf[j] >= comp1)
-          out_buf[k++] = in_buf[j];
+          out_buf[k++] = BUF_SIZE * i + j;
       }
       if (k <=
           BUF_SIZE) // This will always be true, but helps the compiler optimise
@@ -104,7 +104,7 @@ uint64_t filter(filter_t *in, filter_t *out, uint64_t num, uint64_t op,
 #pragma HLS UNROLL factor = 1
 #pragma HLS PIPELINE
         if (in_buf[j] >= comp1 && in_buf[j] <= comp2)
-          out_buf[k++] = in_buf[j];
+          out_buf[k++] = BUF_SIZE * i + j;
       }
       if (k <=
           BUF_SIZE) // This will always be true, but helps the compiler optimise

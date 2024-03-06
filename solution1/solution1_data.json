@@ -1064,7 +1064,7 @@
                 "TripCount": "4096",
                 "Latency": "4098",
                 "PipelineII": "1",
-                "PipelineDepth": "3"
+                "PipelineDepth": "4"
               },
               {
                 "Name": "memcpy.out.out_buf.gep",
@@ -1079,8 +1079,8 @@
           }],
         "Area": {
           "BRAM_18K": "18",
-          "FF": "1912",
-          "LUT": "2233",
+          "FF": "2139",
+          "LUT": "2335",
           "URAM": "0",
           "DSP48E": "0"
         }
@@ -1096,7 +1096,7 @@
   },
   "GenData": {
     "DataVersion": "0.2",
-    "Time": "2024-02-09 12:42:05 CET",
+    "Time": "2021-03-06 11:02:08 CET",
     "ToolName": "vivado_hls",
     "ToolVersion": "2019.1.3"
   }
