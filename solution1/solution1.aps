@@ -5,7 +5,7 @@
     <config>
         <schedule model="filter"/>
         <config_sdx target="none"/>
-        <config_export format="ip_catalog" rtl="verilog" use_netlist="" vivado_optimization_level="2" vivado_phys_opt="place" vivado_report_level="0"/>
+        <config_export format="ip_catalog" rtl="verilog" use_netlist="none" vivado_optimization_level="2" vivado_phys_opt="place" vivado_report_level="0"/>
         <config_interface clock_enable="0" expose_global="0" m_axi_addr64="1" m_axi_offset="slave" register_io="off" trim_dangling_port="0"/>
     </config>
     <UIConfigurations>
@@ -40,7 +40,7 @@
         </UIAutoSimConf>
     </UIConfigurations>
     <ExportDesign askAgain="false" evaluate="false" flow="false" flowChoice="syn" formatName="ip_catalog" rtl="verilog" rtlButton="true" rtlCombo="verilog">
-        <Format formatName="ip_catalog" description="" vendor="" library="" ipname="" version="" driver_input_dir="" display_name="" taxonomy=""/>
+        <Format formatName="ip_catalog"/>
         <Format formatName="sysgen"/>
         <Format formatName="sysgen_ise"/>
         <Format formatName="syn_dcp"/>
@@ -53,9 +53,6 @@
             <Rtl active="false" name="vhdl"/>
         </SimFlow>
     </Simulation>
-    <downStreamTool>
-        <DownStreamTool name="vivado"/>
-    </downStreamTool>
     <name>
         <value string="solution1"/>
     </name>
@@ -69,8 +66,11 @@
         <library name="DefaultPlatform" value="xilinx/zynquplus/zynquplus"/>
         <library value="xilinx/zynquplus/zynquplus_fpv7" name="DefaultPlatform"/>
     </libraryList>
+    <downStreamTool>
+        <DownStreamTool name="vivado"/>
+    </downStreamTool>
     <clockList>
-        <clock name="default" default="false" uncertainty="12.5%" period="500MHz"/>
+        <clock default="false" name="default" uncertainty="5%" period="500MHz"/>
     </clockList>
 </solution>
 

@@ -1,6 +1,6 @@
 #include "filter.h"
 
-uint64_t filter(filter_t *in, filter_t *out, uint64_t num, uint64_t op,
+uint32_t filter(filter_t *in, filter_t *out, uint32_t num, uint8_t op,
                 filter_t comp1, filter_t comp2) {
 #pragma HLS INTERFACE m_axi port = in offset = slave bundle = gmem
 #pragma HLS INTERFACE m_axi port = out offset = slave bundle = gmem
@@ -10,8 +10,8 @@ uint64_t filter(filter_t *in, filter_t *out, uint64_t num, uint64_t op,
 #pragma HLS INTERFACE s_axilite port = comp2 bundle = control
 #pragma HLS INTERFACE s_axilite port = return bundle = control
 
-  uint64_t c = 0, // Overall result counter
-      k = 0,      // Vector result counter
+  uint8_t k = 0;  // Vector result counter
+  uint32_t c = 0, // Overall result counter
       i,          // Vector iterator
       j;          // Value iterator
 
@@ -27,12 +27,12 @@ uint64_t filter(filter_t *in, filter_t *out, uint64_t num, uint64_t op,
       for (j = 0; j < BUF_SIZE; j++) {
 #pragma HLS UNROLL factor = 1
 #pragma HLS PIPELINE
-        if (in_buf[j] == comp1)
-          out_buf[k++] = BUF_SIZE * i + j;
+        if (in_buf[j] == comp1) {
+          out_buf[k] = BUF_SIZE * i + j;
+          k += 1;
+        }
       }
-      if (k <=
-          BUF_SIZE) // This will always be true, but helps the compiler optimise
-        memcpy(out + c, out_buf, k * sizeof(filter_t));
+      memcpy(out + c, out_buf, k * sizeof(filter_t));
       c += k;
       k = 0;
     }
@@ -46,12 +46,12 @@ uint64_t filter(filter_t *in, filter_t *out, uint64_t num, uint64_t op,
       for (j = 0; j < BUF_SIZE; j++) {
 #pragma HLS UNROLL factor = 1
 #pragma HLS PIPELINE
-        if (in_buf[j] != comp1)
-          out_buf[k++] = BUF_SIZE * i + j;
+        if (in_buf[j] != comp1) {
+          out_buf[k] = BUF_SIZE * i + j;
+          k += 1;
+        }
       }
-      if (k <=
-          BUF_SIZE) // This will always be true, but helps the compiler optimise
-        memcpy(out + c, out_buf, k * sizeof(filter_t));
+      memcpy(out + c, out_buf, k * sizeof(filter_t));
       c += k;
       k = 0;
     }
@@ -65,12 +65,12 @@ uint64_t filter(filter_t *in, filter_t *out, uint64_t num, uint64_t op,
       for (j = 0; j < BUF_SIZE; j++) {
 #pragma HLS UNROLL factor = 1
 #pragma HLS PIPELINE
-        if (in_buf[j] <= comp1)
-          out_buf[k++] = BUF_SIZE * i + j;
+        if (in_buf[j] <= comp1) {
+          out_buf[k] = BUF_SIZE * i + j;
+          k += 1;
+        }
       }
-      if (k <=
-          BUF_SIZE) // This will always be true, but helps the compiler optimise
-        memcpy(out + c, out_buf, k * sizeof(filter_t));
+      memcpy(out + c, out_buf, k * sizeof(filter_t));
       c += k;
       k = 0;
     }
@@ -84,12 +84,12 @@ uint64_t filter(filter_t *in, filter_t *out, uint64_t num, uint64_t op,
       for (j = 0; j < BUF_SIZE; j++) {
 #pragma HLS UNROLL factor = 1
 #pragma HLS PIPELINE
-        if (in_buf[j] >= comp1)
-          out_buf[k++] = BUF_SIZE * i + j;
+        if (in_buf[j] >= comp1) {
+          out_buf[k] = BUF_SIZE * i + j;
+          k += 1;
+        }
       }
-      if (k <=
-          BUF_SIZE) // This will always be true, but helps the compiler optimise
-        memcpy(out + c, out_buf, k * sizeof(filter_t));
+      memcpy(out + c, out_buf, k * sizeof(filter_t));
       c += k;
       k = 0;
     }
@@ -103,19 +103,19 @@ uint64_t filter(filter_t *in, filter_t *out, uint64_t num, uint64_t op,
       for (j = 0; j < BUF_SIZE; j++) {
 #pragma HLS UNROLL factor = 1
 #pragma HLS PIPELINE
-        if (in_buf[j] >= comp1 && in_buf[j] <= comp2)
-          out_buf[k++] = BUF_SIZE * i + j;
+        if (in_buf[j] >= comp1 && in_buf[j] <= comp2) {
+          out_buf[k] = BUF_SIZE * i + j;
+          k += 1;
+        }
       }
-      if (k <=
-          BUF_SIZE) // This will always be true, but helps the compiler optimise
-        memcpy(out + c, out_buf, k * sizeof(filter_t));
+      memcpy(out + c, out_buf, k * sizeof(filter_t));
       c += k;
       k = 0;
     }
     break;
 #endif
   default:
-    c = UINT64_MAX;
+    c = UINT32_MAX;
     break;
   }
 

@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define BUF_SIZE 4096
+#define BUF_SIZE 256
 
 typedef uint32_t filter_t;
 

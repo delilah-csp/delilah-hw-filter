@@ -12,9 +12,9 @@ open_solution "solution1"
 set_part {xczu17eg-ffvc1760-2-e} -tool vivado
 create_clock -period 500MHz -name default
 config_sdx -target none
-config_export -format ip_catalog -rtl verilog -vivado_optimization_level 2 -vivado_phys_opt place -vivado_report_level 0
+config_export -format ip_catalog -rtl verilog -use_netlist none -vivado_optimization_level 2 -vivado_phys_opt place -vivado_report_level 0
 config_interface -clock_enable=0 -expose_global=0 -m_axi_addr64 -m_axi_offset slave -register_io off -trim_dangling_port=0
-set_clock_uncertainty 12.5%
+set_clock_uncertainty 5%
 #source "./delilah-hw-filter/solution1/directives.tcl"
 csim_design
 csynth_design
