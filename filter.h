@@ -4,8 +4,10 @@
 #include <string.h>
 
 #define BUF_SIZE 256
+#define DELILAH_FILTER_ADVANCED 1
 
 typedef uint32_t filter_t;
+
 
 enum DELILAH_FILTER_OPS {
   DELILAH_FILTER_EQ,
